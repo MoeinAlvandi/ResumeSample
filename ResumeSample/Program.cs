@@ -1,5 +1,9 @@
 using Microsoft.EntityFrameworkCore;
+using ResumeSample.Core.Services.Implementetions;
+using ResumeSample.Core.Services.Interfaces;
 using ResumeSample.Data.Context;
+using ResumeSample.Data.Repositories;
+using ResumeSample.Domain.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,7 +19,8 @@ builder.Services.AddDbContext<ResumSampleContext>(options =>
 #endregion
 
 
-
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 
 
