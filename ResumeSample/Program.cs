@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using ResumeSample.Core.Services.Implementetions;
 using ResumeSample.Core.Services.Interfaces;
 using ResumeSample.Data.Context;
+using ResumeSample.IOC;
 using ResumeSample.Data.Repositories;
 using ResumeSample.Domain.Interfaces;
 
@@ -19,11 +20,8 @@ builder.Services.AddDbContext<ResumSampleContext>(options =>
 #endregion
 
 
-builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<IUserRepository, UserRepository>();
 
-
-
+builder.Services.RegisterServices();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
