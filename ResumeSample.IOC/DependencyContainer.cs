@@ -16,7 +16,7 @@ namespace ResumeSample.IOC
         public static void RegisterServices(this IServiceCollection service)
         {
 
-            service.AddScoped<IUserService, UserService>();
+            service.AddScoped<IUserService, UserService>();//per request
             service.AddScoped<IUserRepository, UserRepository>();
 
 

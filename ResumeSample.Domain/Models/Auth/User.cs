@@ -13,7 +13,7 @@ namespace ResumeSample.Domain.Models.Auth
         public int Id { get; set; }
 
 
-        [MaxLength(50)]
+        [MaxLength(5,ErrorMessage ="The Text Is long")]
         public string Fullname { get; set; }
 
 
