@@ -1,5 +1,16 @@
 ﻿@model List<User>
 
+@if (ViewBag.SuccessMessage != null)
+{
+    <input type="hidden" name="SuccessId" id="SuccessId" value="@ViewBag.SuccessMessage" />
+}
+
+@if (ViewBag.DangerMessage != null)
+{
+    <input type="hidden" name="DangerId" id="DangerId" value="@ViewBag.DangerMessage" />
+}
+
+
 
 <div>
     <table class="table table-bordered">
@@ -20,9 +31,9 @@
             </th>
         </tr>
 
-        @if(Model.Any())
+        @if (Model.Any())
         {
-           foreach (var item in Model)
+            foreach (var item in Model)
             {
                 <tr>
                     <td>
@@ -35,7 +46,13 @@
                         @item.Password
                     </td>
                     <td>
-                        
+                        <a class="btn btn-warning" href="\EditUser\@item.Id">
+                            Edit User
+                        </a>
+
+                        <button class="btn btn-danger" onclick="confirm('@item.Id','@item.Fullname')">
+                            Delete User
+                        </button>
                     </td>
                 </tr>
             }
@@ -50,3 +67,101 @@
         }
     </table>
 </div>
+
+@section Scripts {
+    <script>
+
+        function confirm( ID, userName){
+
+              Swal.fire({
+                title: 'هشدار',
+                text: "آیا از حذف کاربر " +userName+" اطمینان دارید؟",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'بله حتما !',
+                confirmButtonClass: 'btn btn-warning',
+                cancelButtonClass: 'btn btn-danger ml-1',
+                cancelButtonText: 'نه ممنون',
+                buttonsStyling: false,
+            }).then(function (result) {
+                if (result.value) {
+
+                    $.ajax({
+                        method: 'POST',
+                        url: '/DeleteUser',
+                        data: { id: ID },
+                        beforesend:function(){
+
+                        },
+                        success: function (response) {
+                            Swal.fire({
+                                type: "success",
+                                title: 'تبریک',
+                                text: response,
+                                confirmButtonClass: 'btn btn-success',
+                                confirmButtonText: 'Ok',
+                            }).then(function (result2) {
+                                location.reload();
+
+                            });
+                        },
+                        error: function (response) {
+                            Swal.fire({
+                                title: 'متوقف شد',
+                                text: response.responseText,
+                                type: 'error',
+                                confirmButtonClass: 'btn btn-success',
+                                confirmButtonText: 'Ok',
+                            });
+                            console.log(response.responseText);
+                        }
+                    })
+
+
+                    //Swal.fire({
+                    //    type: "success",
+                    //    title: 'حذف شد!',
+                    //    text: 'فایل شما حذف شد.',
+                    //    confirmButtonClass: 'btn btn-success',
+                    //    confirmButtonText: 'باشه',
+                    //});
+                } else {
+
+                }
+            });
+        }
+
+
+        window.onload = function(){
+            var successField = document.getElementById("SuccessId");
+
+            if (successField && successField.value.trim() !== "") {
+               // alert(successField.value);
+                Swal.fire({
+                                title: 'تبریک',
+                                text: successField.value,
+                                type: "success",
+                                confirmButtonClass: 'btn btn-success',
+                                confirmButtonText: 'Ok',
+                            });
+
+
+                }
+
+                 var dangerField = document.getElementById("DangerId");
+
+            if (dangerField && dangerField.value.trim() !== "") {
+                // alert(dangerField.value);
+
+                                Swal.fire({
+                                title: 'هشدار',
+                                text: dangerField.value,
+                                type: "error",
+                                confirmButtonClass: 'btn btn-success',
+                                confirmButtonText: 'Ok',
+                            });
+                }
+
+        };
+    </script>
+}

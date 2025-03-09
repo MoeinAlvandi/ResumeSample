@@ -12,6 +12,8 @@ namespace ResumeSample.Domain.Interfaces
         User GetByID(int id);//find
         List<User> GetAll();//select * 
 
+        bool IsExist(int id);
+
         void Add(User user);//insert
         void Update(User user);//update
         void Delete(int id);//delete

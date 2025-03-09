@@ -10,6 +10,9 @@ namespace ResumeSample.Core.Services.Interfaces
     public interface IUserService
     {
         User GetUserByID(int id);
+
+        bool IsExist(int id);
+
         List<User> GetAllUsers();
         void AddUser(User user);
         void UpdateUser(User user);
