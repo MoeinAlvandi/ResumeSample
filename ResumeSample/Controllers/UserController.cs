@@ -57,7 +57,7 @@ namespace ResumeSample.Controllers
 
         #region EditUser
 
-        [HttpGet("EditUser/{Id}")]
+        [HttpGet("/EditUser/{Id}")]
         public IActionResult EditUser(int Id)
         {
             if (Id > 0)
@@ -65,6 +65,7 @@ namespace ResumeSample.Controllers
                 if (userService.IsExist(Id))
                 {
                     User user = userService.GetUserByID(Id);
+                    
                     return View(user);
                 }
                 else

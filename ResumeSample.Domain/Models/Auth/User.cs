@@ -20,5 +20,12 @@ namespace ResumeSample.Domain.Models.Auth
         [MaxLength(50)] 
         public string Password { get; set; }
 
+
+        #region Relation
+            public List<Address> Addresses { get; set; }
+        #endregion
+
+
+
     }
 }

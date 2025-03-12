@@ -20,6 +20,8 @@ namespace ResumeSample.IOC
             service.AddScoped<IUserRepository, UserRepository>();
 
 
+            service.AddScoped<IAddressService, AddressService>();
+            service.AddScoped<IAddressRepository, AddressRepository>();
         }
     }
 }
